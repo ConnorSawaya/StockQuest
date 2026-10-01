@@ -73,7 +73,7 @@ export default function AdminPanel() {
             <div className="flex items-center justify-between px-4 py-3 border-b border-gray-800">
               <div className="flex items-center gap-2">
                 <Terminal className="w-4 h-4 text-green-400" />
-                <span className="text-green-400 font-mono text-sm font-bold">Admin Console</span>
+                <span className="text-green-400 font-mono text-sm font-bold">Demo Tools</span>
               </div>
               <button onClick={() => setOpen(false)}>
                 <X className="w-4 h-4 text-gray-500 hover:text-white" />
@@ -107,7 +107,7 @@ export default function AdminPanel() {
                 onClick={toggleAdminMode}
                 className="text-xs text-gray-500 hover:text-red-400 transition-colors"
               >
-                Exit admin mode
+                Exit demo tools
               </button>
             </div>
           </motion.div>
@@ -120,7 +120,7 @@ export default function AdminPanel() {
         className="flex items-center gap-2 bg-gray-950 border border-green-500 text-green-400 font-mono text-xs px-3 py-2 rounded-xl shadow-lg hover:bg-gray-900 transition-colors"
       >
         <Terminal className="w-3.5 h-3.5" />
-        Admin
+        Demo tools
         {open ? <ChevronDown className="w-3 h-3" /> : <ChevronUp className="w-3 h-3" />}
       </button>
     </div>

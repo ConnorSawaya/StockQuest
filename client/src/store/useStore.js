@@ -7,18 +7,9 @@ const HEART_REFILL_MS = 15 * 60 * 1000; // 15 minutes
 export const useStore = create((set, get) => ({
   // ── Auth ────────────────────────────────────────────
   user: null,
-  token: localStorage.getItem('sq_token'),
 
   setUser: (user) => set({ user }),
-  setToken: (token) => {
-    if (token) localStorage.setItem('sq_token', token);
-    else localStorage.removeItem('sq_token');
-    set({ token });
-  },
-  logout: () => {
-    localStorage.removeItem('sq_token');
-    set({ user: null, token: null });
-  },
+  logout: () => set({ user: null }),
 
   // ── Hearts ──────────────────────────────────────────
   hearts: INITIAL_HEARTS,

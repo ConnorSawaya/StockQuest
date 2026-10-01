@@ -142,10 +142,13 @@ export default function SettingsPage() {
         </div>
       </Section>
 
-      {/* Parental Controls link */}
-      <Section title="Parental Controls" icon={Shield}>
+      {/* Parent dashboard preview */}
+      <Section title="Parent Preview" icon={Shield}>
+        <p className="mb-3 text-sm text-gray-600">
+          This sample screen does not protect data or control access to app features.
+        </p>
         <a href="/parental" className="btn-secondary text-sm inline-flex items-center gap-1">
-          Open Parental Dashboard <ChevronRight className="w-4 h-4" />
+          Open sample parent dashboard <ChevronRight className="w-4 h-4" />
         </a>
       </Section>
 

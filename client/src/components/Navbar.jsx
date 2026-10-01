@@ -110,7 +110,7 @@ export default function Navbar() {
             className="flex items-center gap-2 text-sm text-gray-500 hover:text-gray-700"
           >
             <Shield className="w-4 h-4" />
-            Parental Controls
+            Parent Preview
           </Link>
           <button
             onClick={toggleAdminMode}
@@ -121,7 +121,7 @@ export default function Navbar() {
             }`}
           >
             <Terminal className="w-4 h-4" />
-            {adminMode ? 'Admin Mode ON' : 'Admin Mode'}
+            {adminMode ? 'Demo Tools ON' : 'Demo Tools'}
           </button>
         </div>
       </nav>

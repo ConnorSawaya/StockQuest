@@ -137,13 +137,13 @@ export default function TradingSimulator() {
           <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
             className={`rounded-lg px-4 py-3 mb-3 text-sm font-medium ${activeEvent.effect === 'up' ? 'bg-success-50 text-success-700' : 'bg-danger-50 text-danger-700'}`}>
             <AlertTriangle className="w-4 h-4 inline mr-2" />
-            {activeEvent.title} � {activeEvent.description}
+            {activeEvent.title} — {activeEvent.description}
           </motion.div>
         )}
         {tradeResult && (
           <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
             className="rounded-lg px-4 py-3 mb-3 text-sm font-medium bg-orange-50 text-orange-700">
-            {tradeResult.type === 'buy' ? '? Bought' : '? Sold'} {tradeResult.shares}� {tradeResult.symbol} at ${tradeResult.price.toFixed(2)}
+            {tradeResult.type === 'buy' ? 'Bought' : 'Sold'} {tradeResult.shares}× {tradeResult.symbol} at ${tradeResult.price.toFixed(2)}
             {tradeResult.profit !== undefined && (
               <span className={tradeResult.profit >= 0 ? ' text-success-600' : ' text-danger-600'}>
                 {' '}({tradeResult.profit >= 0 ? '+' : ''}${tradeResult.profit.toFixed(2)})
@@ -231,7 +231,7 @@ export default function TradingSimulator() {
                     {t.type === 'buy' ? <ShoppingCart className="w-4 h-4 text-orange-500" /> : <DollarSign className="w-4 h-4 text-success-500" />}
                     <div>
                       <div className="text-sm font-medium capitalize">{t.type} {t.symbol}</div>
-                      <div className="text-xs text-gray-400">{t.shares}� @ ${t.price.toFixed(2)}</div>
+                      <div className="text-xs text-gray-400">{t.shares}× @ ${t.price.toFixed(2)}</div>
                     </div>
                   </div>
                   <div className="text-sm font-semibold">${(t.shares * t.price).toFixed(2)}</div>
@@ -249,7 +249,7 @@ export default function TradingSimulator() {
                 <div className="flex items-center justify-between mb-3">
                   <div>
                     <h2 className="text-xl font-bold">{selectedStock.symbol}</h2>
-                    <div className="text-xs text-gray-400">{selectedStock.name} Â· {selectedStock.sector}</div>
+                    <div className="text-xs text-gray-400">{selectedStock.name} · {selectedStock.sector}</div>
                   </div>
                   <div className="text-right">
                     <div className="text-2xl font-bold">${selectedStock.price.toFixed(2)}</div>
@@ -268,7 +268,7 @@ export default function TradingSimulator() {
                   <span className="text-sm font-medium text-gray-600">Shares</span>
                   <div className="flex items-center gap-1">
                     <button onClick={() => setShares(Math.max(1, shares - 1))}
-                      className="w-8 h-8 bg-gray-100 rounded-lg hover:bg-gray-200 flex items-center justify-center text-gray-600 font-bold">âˆ’</button>
+                      className="w-8 h-8 bg-gray-100 rounded-lg hover:bg-gray-200 flex items-center justify-center text-gray-600 font-bold">−</button>
                     <input type="number" value={shares} onChange={(e) => { const v = parseInt(e.target.value, 10); if (!isNaN(v) && v >= 0) setShares(v); }}
                       className="w-16 text-center border border-gray-200 rounded-lg py-1.5 text-sm font-semibold" min="1" />
                     <button onClick={() => setShares(shares + 1)}

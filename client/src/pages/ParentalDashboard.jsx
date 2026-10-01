@@ -18,13 +18,12 @@ export default function ParentalDashboard() {
 
   const passedLessons = completedLessons.filter((l) => l.score >= 80).length;
 
-  // Simple PIN gate (in production, this would be a real auth flow)
   if (!authenticated) {
     return (
       <div className="max-w-md mx-auto text-center py-20">
         <Shield className="w-16 h-16 text-orange-500 mx-auto mb-4" />
-        <h1 className="text-2xl font-bold text-gray-900 mb-2">Parental Controls</h1>
-        <p className="text-gray-500 mb-6 text-sm">Enter your 4-digit PIN to access</p>
+        <h1 className="text-2xl font-bold text-gray-900 mb-2">Sample parent dashboard</h1>
+        <p className="text-gray-700 mb-6 text-sm">Enter any four digits to preview this demo screen.</p>
         <div className="flex justify-center gap-2 mb-6">
           {[0, 1, 2, 3].map((i) => (
             <div
@@ -50,19 +49,21 @@ export default function ParentalDashboard() {
                     const newPin = pin + key;
                     setPin(newPin);
                     if (newPin.length === 4) {
-                      // Accept any 4-digit PIN for demo
-                      setTimeout(() => setAuthenticated(true), 300);
+                      setAuthenticated(true);
                     }
                   }
                 }}
+                aria-label={key === 'del' ? 'Delete last demo PIN digit' : `Enter demo PIN digit ${key}`}
                 className="w-14 h-14 bg-orange-50 rounded-xl text-lg font-semibold hover:bg-orange-100 transition-colors mx-auto flex items-center justify-center border border-orange-200"
               >
                 {key === 'del' ? '←' : key}
               </button>
             );
-          })}}
+          })}
         </div>
-        <p className="text-xs text-gray-400">Enter any 4 digits for this demo</p>
+        <p className="mx-auto max-w-xs text-xs leading-relaxed text-gray-600">
+          This is a demo gate only. It does not protect data or settings; any four digits open the preview.
+        </p>
       </div>
     );
   }
@@ -74,6 +75,9 @@ export default function ParentalDashboard() {
         {description && <div className="text-xs text-gray-500">{description}</div>}
       </div>
       <button
+        type="button"
+        aria-label={`${label} ${value ? 'on' : 'off'}`}
+        aria-pressed={value}
         onClick={() => onChange(!value)}
         className={`relative w-11 h-6 rounded-full transition-colors ${
           value ? 'bg-orange-500' : 'bg-gray-300'
@@ -93,10 +97,14 @@ export default function ParentalDashboard() {
       <div className="flex items-center gap-3 mb-6">
         <Shield className="w-6 h-6 text-orange-500" />
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Parental Dashboard</h1>
-          <p className="text-gray-500 text-sm">Monitor and manage your child's learning</p>
+          <h1 className="text-2xl font-bold text-gray-900">Sample parent dashboard</h1>
+          <p className="text-gray-600 text-sm">A front-end preview with sample learning progress</p>
         </div>
       </div>
+
+      <p className="mb-6 rounded-lg border border-orange-200 bg-orange-50 px-4 py-3 text-sm leading-relaxed text-orange-950" role="note">
+        These settings change this preview only. They do not monitor a child or restrict access to app features.
+      </p>
 
       {/* Child overview */}
       <div className="card mb-6">
@@ -128,32 +136,33 @@ export default function ParentalDashboard() {
       <div className="card mb-6">
         <h2 className="font-bold text-gray-900 mb-4 flex items-center gap-2">
           <Lock className="w-5 h-5 text-orange-500" />
-          Feature Controls
+          Sample Feature Settings
         </h2>
         <Toggle
           label="Trading Simulator"
-          description="Allow access to the virtual trading simulator"
+          description="Preview toggle only; it does not block the simulator"
           value={tradingEnabled}
           onChange={setTradingEnabled}
         />
         <Toggle
           label="Leaderboard"
-          description="Show leaderboard and rankings"
+          description="Preview toggle only; it does not change app access"
           value={leaderboardEnabled}
           onChange={setLeaderboardEnabled}
         />
         <Toggle
           label="Advanced Modules"
-          description="Allow access to modules 4 and 5"
+          description="Preview toggle only; it does not block lessons"
           value={advancedEnabled}
           onChange={setAdvancedEnabled}
         />
 
         <div className="py-3">
-          <div className="text-sm font-medium text-gray-900 mb-2">Daily Time Limit</div>
+          <label htmlFor="daily-time-limit" className="block text-sm font-medium text-gray-900 mb-2">Sample Daily Time Limit</label>
           <div className="flex items-center gap-3">
             <Clock className="w-5 h-5 text-orange-400" />
             <input
+              id="daily-time-limit"
               type="range"
               min="15"
               max="120"
@@ -173,19 +182,17 @@ export default function ParentalDashboard() {
       <div className="card mb-6">
         <h2 className="font-bold text-gray-900 mb-4 flex items-center gap-2">
           <Download className="w-5 h-5 text-orange-500" />
-          Export Reports
+          Export Sample Summary
         </h2>
         <p className="text-sm text-gray-500 mb-4">
-          Download a summary of your child's progress, lessons completed, and trading performance.
+          Download or print the sample lesson progress shown in this browser demo.
         </p>
         <div className="flex gap-3">
           <button
-            onClick={() => {
-              alert(`PDF Report:\n\nLessons Passed: ${passedLessons}\nTotal XP: ${xp}\nStreak: ${streakCount} days\nBadges: ${earnedBadges.length}\n\nThis would download a PDF in production.`);
-            }}
+            onClick={() => window.print()}
             className="btn-primary text-sm"
           >
-            Download PDF Report
+            Print this summary
           </button>
           <button
             onClick={() => {
@@ -194,19 +201,22 @@ export default function ParentalDashboard() {
               const url = URL.createObjectURL(blob);
               const a = document.createElement('a');
               a.href = url;
-              a.download = 'child-progress.csv';
+              a.download = 'stockquest-sample-progress.csv';
+              document.body.appendChild(a);
               a.click();
+              a.remove();
+              setTimeout(() => URL.revokeObjectURL(url), 0);
             }}
             className="btn-secondary text-sm"
           >
-            Download CSV Data
+            Download CSV summary
           </button>
         </div>
       </div>
 
       {/* Quick links */}
       <div className="card">
-        <h2 className="font-bold text-gray-900 mb-4">Quick Links</h2>
+          <h2 className="font-bold text-gray-900 mb-4">Explore the demo</h2>
         {[
           { icon: BookOpen, label: "View Child's Lessons", path: '/lessons' },
           { icon: TrendingUp, label: "View Trading History", path: '/trade' },
